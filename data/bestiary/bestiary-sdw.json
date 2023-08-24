@@ -108,6 +108,11 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"dagger|phb",
+				"shortbow|phb",
+				"shortsword|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -479,9 +484,20 @@
 				"invisible",
 				"unconscious"
 			],
+			"savingThrowForced": [
+				"dexterity",
+				"strength",
+				"wisdom"
+			],
+			"savingThrowForcedLegendary": [
+				"constitution"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity",
+				"wisdom"
+			],
 			"hasToken": true,
-			"hasFluff": true,
-			"hasFluffImages": true
+			"hasFluff": true
 		},
 		{
 			"name": "Spellcaster (Healer)",
@@ -602,6 +618,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"quarterstaff|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -619,6 +638,10 @@
 			],
 			"conditionInflictSpell": [
 				"incapacitated"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"dexterity"
 			],
 			"hasToken": true
 		},
@@ -741,6 +764,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"quarterstaff|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -760,6 +786,11 @@
 			"conditionInflictSpell": [
 				"invisible",
 				"unconscious"
+			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"dexterity",
+				"wisdom"
 			],
 			"hasToken": true
 		},
@@ -889,6 +920,10 @@
 						"When a creature the warrior can see attacks a target other than the warrior that is within 5 feet of the warrior, the warrior can use their reaction to impose disadvantage on the attack roll. The warrior must be wielding a shield."
 					]
 				}
+			],
+			"attachedItems": [
+				"longbow|phb",
+				"longsword|phb"
 			],
 			"languageTags": [
 				"C"

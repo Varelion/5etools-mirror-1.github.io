@@ -93,13 +93,20 @@ class SublistManager {
 
 		if (this._$wrpContainer.hasClass(`sublist--resizable`)) this._pBindSublistResizeHandlers();
 
-		this._$wrpSummaryControls = this._saveManager.$getRenderedSummary({
+		const {$wrp: $wrpSummaryControls, cbOnListUpdated} = this._saveManager.$getRenderedSummary({
 			cbOnNew: (evt) => this.pHandleClick_new(evt),
+			cbOnDuplicate: (evt) => this.pHandleClick_duplicate(evt),
 			cbOnSave: (evt) => this.pHandleClick_save(evt),
 			cbOnLoad: (evt) => this.pHandleClick_load(evt),
 			cbOnReset: (evt, exportedSublist) => this.pDoLoadExportedSublist(exportedSublist),
 			cbOnUpload: (evt) => this.pHandleClick_upload({isAdditive: evt.shiftKey}),
 		});
+
+		this._$wrpSummaryControls = $wrpSummaryControls;
+
+		const hkOnListUpdated = () => cbOnListUpdated({cntVisibleItems: this._listSub.visibleItems.length});
+		this._listSub.on("updated", hkOnListUpdated);
+		hkOnListUpdated();
 
 		this._$wrpContainer.after(this._$wrpSummaryControls);
 
@@ -158,7 +165,7 @@ class SublistManager {
 		return this._isSublistItemsCountable
 			? new ContextUtil.Action(
 				"Remove",
-				async (evt, userData) => {
+				async (evt, {userData}) => {
 					const {selection} = userData;
 					await Promise.all(selection.map(item => this.pDoSublistRemove({entity: item.data.entity, doFinalize: false})));
 					await this._pFinaliseSublist();
@@ -166,7 +173,7 @@ class SublistManager {
 			)
 			: new ContextUtil.Action(
 				"Unpin",
-				async (evt, userData) => {
+				async (evt, {userData}) => {
 					const {selection} = userData;
 					for (const item of selection) {
 						await this.pDoSublistRemove({entity: item.data.entity, doFinalize: false});
@@ -180,7 +187,7 @@ class SublistManager {
 		const subActions = [
 			new ContextUtil.Action(
 				"Popout",
-				(evt, userData) => {
+				(evt, {userData}) => {
 					const {ele, selection} = userData;
 					const entities = selection.map(listItem => ({entity: listItem.data.entity, hash: listItem.values.hash}));
 					return _UtilListPage.pDoMassPopout(evt, ele, entities);
@@ -230,7 +237,7 @@ class SublistManager {
 		}
 
 		const ele = listItem.ele instanceof $ ? listItem.ele[0] : listItem.ele;
-		ContextUtil.pOpenMenu(evt, menu, {ele: ele, selection});
+		ContextUtil.pOpenMenu(evt, menu, {userData: {ele: ele, selection}});
 	}
 
 	pGetSublistItem () { throw new Error(`Unimplemented!`); }
@@ -389,6 +396,10 @@ class SublistManager {
 			prevExportableSublist: exportableSublistMemory,
 			evt,
 		}));
+	}
+
+	async pHandleClick_duplicate (evt) {
+		await this._saveManager.pDoDuplicate(await this.pGetExportableSublist({isForceIncludePlugins: true}));
 	}
 
 	async pHandleClick_load (evt) {
@@ -834,13 +845,14 @@ class ListPage {
 	 * @param opts.listClass List class.
 	 * @param opts.listOptions Other list options.
 	 * @param opts.dataProps JSON data propert(y/ies).
+	 *
 	 * @param [opts.bookViewOptions] Book view options.
-	 * @param [opts.bookViewOptions.$btnOpen]
-	 * @param [opts.bookViewOptions.$eleNoneVisible]
+	 * @param [opts.bookViewOptions.ClsBookView]
 	 * @param [opts.bookViewOptions.pageTitle]
-	 * @param [opts.bookViewOptions.popTblGetNumShown]
-	 * @param [opts.bookViewOptions.fnSort]
-	 * @param [opts.bookViewOptions.fnGetMd]
+	 * @param [opts.bookViewOptions.namePlural]
+	 * @param [opts.bookViewOptions.propMarkdown]
+	 * @param [opts.bookViewOptions.fnPartition]
+	 *
 	 * @param [opts.tableViewOptions] Table view options.
 	 * @param [opts.hasAudio] True if the entities have pronunciation audio.
 	 * @param [opts.isPreviewable] True if the entities can be previewed in-line as part of the list.
@@ -1051,94 +1063,12 @@ class ListPage {
 	_pOnLoad_bookView () {
 		if (!this._bookViewOptions) return;
 
-		this._bookView = new BookModeView({
-			hashKey: "bookview",
-			$openBtn: this._bookViewOptions.$btnOpen,
-			$eleNoneVisible: this._bookViewOptions.$eleNoneVisible,
-			pageTitle: this._bookViewOptions.pageTitle || "Book View",
-			popTblGetNumShown: this._bookView_popTblGetNumShown.bind(this),
-			hasPrintColumns: true,
+		this._bookView = new (this._bookViewOptions.ClsBookView || ListPageBookView)({
+			...this._bookViewOptions,
+			sublistManager: this._sublistManager,
+			fnGetEntLastLoaded: () => this._dataList[Hist.lastLoadedId],
+			$btnOpen: $(`#btn-book`),
 		});
-	}
-
-	_bookView_popTblGetNumShown ({$wrpContent, $dispName, $wrpControls, fnPartition}) {
-		if (this._bookViewOptions.fnGetMd) this._bookView_$getControlsMarkdown().appendTo($wrpControls);
-
-		this._bookViewToShow = this._sublistManager.getSublistedEntities();
-
-		const fnRender = Renderer.hover.getFnRenderCompact(UrlUtil.getCurrentPage(), {isStatic: true});
-
-		const stack = [];
-		const renderEnt = (p) => {
-			stack.push(`<div class="bkmv__wrp-item"><table class="w-100 stats stats--book stats--bkmv"><tbody>`);
-			stack.push(fnRender(p));
-			stack.push(`</tbody></table></div>`);
-		};
-
-		const renderPartition = (dataArr) => {
-			dataArr.forEach(it => renderEnt(it));
-		};
-
-		const partitions = [];
-		if (fnPartition) {
-			this._bookViewToShow.forEach(it => {
-				const partition = fnPartition(it);
-				(partitions[partition] = partitions[partition] || []).push(it);
-			});
-		} else partitions[0] = this._bookViewToShow;
-		partitions.filter(Boolean).forEach(arr => renderPartition(arr));
-
-		if (!this._bookViewToShow.length && Hist.lastLoadedId != null) {
-			renderEnt(this._dataList[Hist.lastLoadedId]);
-		}
-
-		$wrpContent.append(stack.join(""));
-		return this._bookViewToShow.length;
-	}
-
-	_bookView_getAsMarkdown () {
-		const fnSort = this._bookViewOptions.fnSort || ((a, b) => SortUtil.ascSortLower(a.name, b.name));
-
-		const toRender = this._bookViewToShow?.length ? this._bookViewToShow : [this._dataList[Hist.lastLoadedId]];
-		const parts = [...toRender]
-			.sort(fnSort)
-			.map(this._bookViewOptions.fnGetMd);
-
-		const out = [];
-		let charLimit = RendererMarkdown.CHARS_PER_PAGE;
-		for (let i = 0; i < parts.length; ++i) {
-			const part = parts[i];
-			out.push(part);
-
-			if (i < parts.length - 1) {
-				if ((charLimit -= part.length) < 0) {
-					if (RendererMarkdown.getSetting("isAddPageBreaks")) out.push("", "\\pagebreak", "");
-					charLimit = RendererMarkdown.CHARS_PER_PAGE;
-				}
-			}
-		}
-
-		return out.join("\n\n");
-	}
-
-	_bookView_$getControlsMarkdown () {
-		const $btnDownloadMarkdown = $(`<button class="btn btn-default btn-sm">Download as Markdown</button>`)
-			.click(() => DataUtil.userDownloadText(`${UrlUtil.getCurrentPage().replace(".html", "")}.md`, this._bookView_getAsMarkdown()));
-
-		const $btnCopyMarkdown = $(`<button class="btn btn-default btn-sm px-2" title="Copy Markdown to Clipboard"><span class="glyphicon glyphicon-copy"/></button>`)
-			.click(async () => {
-				await MiscUtil.pCopyTextToClipboard(this._bookView_getAsMarkdown());
-				JqueryUtil.showCopiedEffect($btnCopyMarkdown);
-			});
-
-		const $btnDownloadMarkdownSettings = $(`<button class="btn btn-default btn-sm px-2" title="Markdown Settings"><span class="glyphicon glyphicon-cog"/></button>`)
-			.click(async () => RendererMarkdown.pShowSettingsModal());
-
-		return $$`<div class="ve-flex-v-center btn-group ml-3">
-			${$btnDownloadMarkdown}
-			${$btnCopyMarkdown}
-			${$btnDownloadMarkdownSettings}
-		</div>`;
 	}
 
 	_pOnLoad_tableView () {
@@ -1321,8 +1251,8 @@ class ListPage {
 			.on("click", async evt => {
 				let url = window.location.href;
 
-				if (evt.ctrlKey || evt.metaKey) {
-					await MiscUtil.pCopyTextToClipboard(this._filterBox.getFilterTag());
+				if (EventUtil.isCtrlMetaKey(evt)) {
+					await MiscUtil.pCopyTextToClipboard(this._filterBox.getFilterTag({isAddSearchTerm: true}));
 					JqueryUtil.showCopiedEffect($btn);
 					return;
 				}
@@ -1349,7 +1279,7 @@ class ListPage {
 				(evt) => {
 					if (Hist.lastLoadedId === null) return;
 
-					if (this._isMarkdownPopout && (evt.ctrlKey || evt.metaKey)) return this._bindPopoutButton_doShowMarkdown(evt);
+					if (this._isMarkdownPopout && (EventUtil.isCtrlMetaKey(evt))) return this._bindPopoutButton_doShowMarkdown(evt);
 					return this._bindPopoutButton_doShowStatblock(evt);
 				},
 			);
@@ -1525,16 +1455,20 @@ class ListPage {
 			return;
 		}
 
-		let tgtItemOtherList = null;
-		for (let i = it.x + dir; i >= 0 && i < lists.length; i += dir) {
-			if (!lists[i]?.visibleItems?.length) continue;
+		let ixListOther = it.x + dir;
 
-			tgtItemOtherList = dir === 1 ? lists[i].visibleItems[0] : lists[i].visibleItems.last();
-		}
+		if (ixListOther === -1) ixListOther = lists.length - 1;
+		else if (ixListOther === lists.length) ixListOther = 0;
 
-		if (tgtItemOtherList) {
+		for (; ixListOther >= 0 && ixListOther < lists.length; ixListOther += dir) {
+			if (!lists[ixListOther]?.visibleItems?.length) continue;
+
+			const tgtItemOtherList = dir === 1 ? lists[ixListOther].visibleItems[0] : lists[ixListOther].visibleItems.last();
+			if (!tgtItemOtherList) continue;
+
 			window.location.hash = tgtItemOtherList.values.hash;
 			this._initList_scrollToItem();
+			return;
 		}
 	}
 
@@ -1562,7 +1496,7 @@ class ListPage {
 			selection = [listItem];
 		}
 
-		ContextUtil.pOpenMenu(evt, this._contextMenuList, {ele: listItem.ele, selection});
+		ContextUtil.pOpenMenu(evt, this._contextMenuList, {userData: {ele: listItem.ele, selection}});
 	}
 
 	_initContextMenu () {
@@ -1571,12 +1505,14 @@ class ListPage {
 		this._contextMenuList = ContextUtil.getMenu([
 			new ContextUtil.Action(
 				"Popout",
-				(evt, userData) => {
+				async (evt, {userData}) => {
 					const {ele, selection} = userData;
-					this._handleGenericContextMenuClick_pDoMassPopout(evt, ele, selection);
+					await this._handleGenericContextMenuClick_pDoMassPopout(evt, ele, selection);
 				},
 			),
 			this._getContextActionAdd(),
+			null,
+			this._getContextActionBlocklist(),
 		]);
 	}
 
@@ -1605,6 +1541,16 @@ class ListPage {
 					this._updateSelected();
 				},
 			);
+	}
+
+	_getContextActionBlocklist () {
+		return new ContextUtil.Action(
+			"Blocklist",
+			async (evt, {userData}) => {
+				const {ele, selection} = userData;
+				await this._handleGenericContextMenuClick_pDoMassBlocklist(evt, ele, selection);
+			},
+		);
 	}
 
 	_getOrTabRightButton (ident, icon, {title} = {}) {
@@ -1717,6 +1663,16 @@ class ListPage {
 			});
 		}
 
+		contextOptions.push(
+			null,
+			new ContextUtil.Action(
+				"Blocklist",
+				async () => {
+					await this._pDoMassBlocklist([this._dataList[Hist.lastLoadedId]]);
+				},
+			),
+		);
+
 		const menu = ContextUtil.getMenu(contextOptions);
 		$btnOptions
 			.off("click")
@@ -1726,6 +1682,25 @@ class ListPage {
 	async _handleGenericContextMenuClick_pDoMassPopout (evt, ele, selection) {
 		const entities = selection.map(listItem => ({entity: this._dataList[listItem.ix], hash: listItem.values.hash}));
 		return _UtilListPage.pDoMassPopout(evt, ele, entities);
+	}
+
+	async _handleGenericContextMenuClick_pDoMassBlocklist (evt, ele, selection) {
+		await this._pDoMassBlocklist(selection.map(listItem => this._dataList[listItem.ix]));
+	}
+
+	async _pDoMassBlocklist (ents) {
+		await ExcludeUtil.pExtendList(
+			ents.map(ent => {
+				return {
+					category: ent.__prop,
+					displayName: ent._displayName || ent.name,
+					hash: UrlUtil.autoEncodeHash(ent),
+					source: ent.source,
+				};
+			}),
+		);
+
+		JqueryUtil.doToast(`Added ${ents.length} entr${ents.length === 1 ? "y" : "ies"} to the blocklist! Reload the page to view any changes.`);
 	}
 
 	doDeselectAll () { this.primaryLists.forEach(list => list.deselectAll()); }
@@ -1741,6 +1716,7 @@ class ListPage {
 	async pDoLoadSubHash (sub) {
 		if (this._filterBox) sub = this._filterBox.setFromSubHashes(sub);
 		if (this._sublistManager) sub = await this._sublistManager.pSetFromSubHashes(sub);
+		if (this._bookView) sub = await this._bookView.pHandleSub(sub);
 		return sub;
 	}
 
@@ -1877,4 +1853,136 @@ class ListPage {
 
 	/** @abstract */
 	_renderStats_doBuildStatsTab ({ent}) { throw new Error("Unimplemented!"); }
+}
+
+class ListPageBookView extends BookModeViewBase {
+	_hashKey = "bookview";
+	_hasPrintColumns = true;
+
+	constructor (
+		{
+			sublistManager,
+			fnGetEntLastLoaded,
+			pageTitle,
+			namePlural,
+			propMarkdown,
+			fnPartition = null,
+			...rest
+		},
+	) {
+		super({...rest});
+		this._sublistManager = sublistManager;
+		this._fnGetEntLastLoaded = fnGetEntLastLoaded;
+		this._pageTitle = pageTitle;
+		this._namePlural = namePlural;
+		this._propMarkdown = propMarkdown;
+		this._fnPartition = fnPartition;
+
+		this._bookViewToShow = null;
+	}
+
+	_$getEleNoneVisible () {
+		return $$`<div class="w-100 ve-flex-col ve-flex-h-center no-shrink no-print mb-3 mt-auto">
+			<div class="mb-2 ve-flex-vh-center min-h-0">
+				<span class="initial-message">If you wish to view multiple ${this._namePlural}, please first make a list</span>
+			</div>
+			<div class="ve-flex-vh-center">${this._$getBtnNoneVisibleClose()}</div>
+		</div>`;
+	}
+
+	_$getWrpControls ({$wrpContent}) {
+		const out = super._$getWrpControls({$wrpContent});
+		const {$wrpPrint} = out;
+		if (this._propMarkdown) this._$getControlsMarkdown().appendTo($wrpPrint);
+		return out;
+	}
+
+	async _pGetRenderContentMeta ({$wrpContent, $wrpContentOuter}) {
+		$wrpContent.addClass("p-2");
+
+		this._bookViewToShow = this._sublistManager.getSublistedEntities()
+			.sort(this._getSorted.bind(this));
+
+		const partitions = [];
+		if (this._fnPartition) {
+			this._bookViewToShow.forEach(it => {
+				const partition = this._fnPartition(it);
+				(partitions[partition] = partitions[partition] || []).push(it);
+			});
+		} else partitions[0] = this._bookViewToShow;
+
+		const stack = partitions
+			.filter(Boolean)
+			.flatMap(arr => arr.map(ent => this._getRenderedEnt(ent)));
+
+		if (!this._bookViewToShow.length && Hist.lastLoadedId != null) {
+			stack.push(this._getRenderedEnt(this._fnGetEntLastLoaded()));
+		}
+
+		$wrpContent.append(stack.join(""));
+
+		return {
+			cntSelectedEnts: this._bookViewToShow.length,
+			isAnyEntityRendered: !!stack.length,
+		};
+	}
+
+	_getRenderedEnt (ent) {
+		return `<div class="bkmv__wrp-item ve-inline-block print__ve-block print__my-2">
+			<table class="w-100 stats stats--book stats--bkmv"><tbody>
+			${Renderer.hover.getFnRenderCompact(UrlUtil.getCurrentPage(), {isStatic: true})(ent)}
+			</tbody></table>
+		</div>`;
+	}
+
+	_getVisibleAsMarkdown () {
+		const toRender = this._bookViewToShow?.length ? this._bookViewToShow : [this._fnGetEntLastLoaded()];
+		const parts = [...toRender]
+			.sort(this._getSorted.bind(this))
+			.map(this._getEntMd.bind(this));
+
+		const out = [];
+		let charLimit = RendererMarkdown.CHARS_PER_PAGE;
+		for (let i = 0; i < parts.length; ++i) {
+			const part = parts[i];
+			out.push(part);
+
+			if (i < parts.length - 1) {
+				if ((charLimit -= part.length) < 0) {
+					if (RendererMarkdown.getSetting("isAddPageBreaks")) out.push("", "\\pagebreak", "");
+					charLimit = RendererMarkdown.CHARS_PER_PAGE;
+				}
+			}
+		}
+
+		return out.join("\n\n");
+	}
+
+	_$getControlsMarkdown () {
+		const $btnDownloadMarkdown = $(`<button class="btn btn-default btn-sm">Download as Markdown</button>`)
+			.click(() => DataUtil.userDownloadText(`${UrlUtil.getCurrentPage().replace(".html", "")}.md`, this._getVisibleAsMarkdown()));
+
+		const $btnCopyMarkdown = $(`<button class="btn btn-default btn-sm px-2" title="Copy Markdown to Clipboard"><span class="glyphicon glyphicon-copy"/></button>`)
+			.click(async () => {
+				await MiscUtil.pCopyTextToClipboard(this._getVisibleAsMarkdown());
+				JqueryUtil.showCopiedEffect($btnCopyMarkdown);
+			});
+
+		const $btnDownloadMarkdownSettings = $(`<button class="btn btn-default btn-sm px-2" title="Markdown Settings"><span class="glyphicon glyphicon-cog"/></button>`)
+			.click(async () => RendererMarkdown.pShowSettingsModal());
+
+		return $$`<div class="ve-flex-v-center btn-group ml-3">
+			${$btnDownloadMarkdown}
+			${$btnCopyMarkdown}
+			${$btnDownloadMarkdownSettings}
+		</div>`;
+	}
+
+	_getSorted (a, b) {
+		return SortUtil.ascSortLower(a.name, b.name);
+	}
+
+	_getEntMd (ent) {
+		return RendererMarkdown.get().render({type: "statblockInline", dataType: this._propMarkdown, data: ent}).trim();
+	}
 }

@@ -47,7 +47,7 @@
 			"languages": [
 				"Aartuk"
 			],
-			"cr": "2",
+			"cr": "3",
 			"spellcasting": [
 				{
 					"name": "Spellcasting (Psionics)",
@@ -123,6 +123,12 @@
 			],
 			"conditionInflict": [
 				"grappled"
+			],
+			"savingThrowForced": [
+				"dexterity"
+			],
+			"savingThrowForcedSpell": [
+				"charisma"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -260,6 +266,9 @@
 			"conditionInflict": [
 				"grappled"
 			],
+			"savingThrowForced": [
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -367,6 +376,9 @@
 			],
 			"conditionInflict": [
 				"grappled"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -488,7 +500,7 @@
 				{
 					"name": "Phase (3/Day)",
 					"entries": [
-						"The dragon becomes partially incorporeal for as long as it maintains concentration on the effect (as if concentrating on a spell). While partially incorporeal, the dragon has resistance to bludgeoning, piercing, and slashing damage."
+						"The dragon becomes partially incorporeal for as long as it maintains {@status concentration} on the effect (as if {@status concentration||concentrating} on a spell). While partially incorporeal, the dragon has resistance to bludgeoning, piercing, and slashing damage."
 					]
 				}
 			],
@@ -514,6 +526,7 @@
 			"dragonAge": "adult",
 			"traitTags": [
 				"Legendary Resistances",
+				"Tunneler",
 				"Unusual Nature"
 			],
 			"senseTags": [
@@ -536,6 +549,9 @@
 				"AOE",
 				"MW",
 				"RCH"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -704,6 +720,10 @@
 			"conditionInflict": [
 				"blinded"
 			],
+			"savingThrowForced": [
+				"constitution",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true
 		},
@@ -818,7 +838,7 @@
 				{
 					"name": "Phase (3/Day)",
 					"entries": [
-						"The dragon becomes partially incorporeal for as long as it maintains concentration on the effect (as if concentrating on a spell). While partially incorporeal, the dragon has resistance to bludgeoning, piercing, and slashing damage."
+						"The dragon becomes partially incorporeal for as long as it maintains {@status concentration} on the effect (as if {@status concentration||concentrating} on a spell). While partially incorporeal, the dragon has resistance to bludgeoning, piercing, and slashing damage."
 					]
 				}
 			],
@@ -849,6 +869,7 @@
 			"dragonAge": "ancient",
 			"traitTags": [
 				"Legendary Resistances",
+				"Tunneler",
 				"Unusual Nature"
 			],
 			"senseTags": [
@@ -874,6 +895,10 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"savingThrowForced": [
+				"constitution",
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -1043,6 +1068,10 @@
 			"conditionInflict": [
 				"blinded"
 			],
+			"savingThrowForced": [
+				"constitution",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -1182,6 +1211,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"scimitar|phb"
+			],
 			"traitTags": [
 				"Fey Ancestry",
 				"Unusual Nature"
@@ -1212,6 +1244,9 @@
 				"blinded",
 				"deafened",
 				"invisible"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -1324,6 +1359,10 @@
 						"{@atk rw} {@hit 5} to hit, range 150/600 ft., one target. {@h}6 ({@damage 1d8 + 2}) piercing damage plus 14 ({@damage 4d6}) radiant damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"longbow|phb",
+				"longsword|phb"
 			],
 			"traitTags": [
 				"Fey Ancestry",
@@ -1446,6 +1485,9 @@
 						"{@atk rs} {@hit 6} to hit, range 120 ft., one target. {@h}22 ({@damage 4d10}) radiant damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"longsword|phb"
 			],
 			"traitTags": [
 				"Fey Ancestry",
@@ -1597,6 +1639,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"morningstar|phb"
+			],
 			"traitTags": [
 				"Fey Ancestry",
 				"Unusual Nature"
@@ -1624,6 +1669,12 @@
 			],
 			"conditionInflictSpell": [
 				"paralyzed"
+			],
+			"savingThrowForced": [
+				"dexterity"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -1717,6 +1768,10 @@
 						"{@atk rw} {@hit 4} to hit, range 150/600 ft., one target. {@h}6 ({@damage 1d8 + 2}) piercing damage plus 10 ({@damage 3d6}) radiant damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"longbow|phb",
+				"longsword|phb"
 			],
 			"traitTags": [
 				"Fey Ancestry",
@@ -1898,6 +1953,9 @@
 				"MW",
 				"RW"
 			],
+			"savingThrowForced": [
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -1984,6 +2042,9 @@
 			],
 			"conditionInflict": [
 				"grappled"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2097,6 +2158,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"greatclub|phb"
+			],
 			"senseTags": [
 				"D"
 			],
@@ -2122,6 +2186,12 @@
 			],
 			"conditionInflictSpell": [
 				"frightened"
+			],
+			"savingThrowForced": [
+				"constitution"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2207,6 +2277,10 @@
 			"conditionInflict": [
 				"blinded",
 				"restrained"
+			],
+			"savingThrowForced": [
+				"constitution",
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2456,6 +2530,10 @@
 			"conditionInflict": [
 				"grappled"
 			],
+			"savingThrowForced": [
+				"constitution",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -2552,6 +2630,9 @@
 			],
 			"miscTags": [
 				"MW"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2681,6 +2762,9 @@
 			"conditionInflict": [
 				"grappled"
 			],
+			"savingThrowForced": [
+				"charisma"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -2786,6 +2870,9 @@
 			"conditionInflict": [
 				"blinded",
 				"restrained"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2909,6 +2996,9 @@
 				"frightened",
 				"grappled"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -3011,6 +3101,9 @@
 			"conditionInflict": [
 				"grappled",
 				"paralyzed"
+			],
+			"savingThrowForced": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -3145,6 +3238,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"longsword|phb",
+				"musket|dmg"
+			],
 			"actionTags": [
 				"Multiattack"
 			],
@@ -3160,6 +3257,9 @@
 				"AOE",
 				"MW",
 				"RW"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -3263,6 +3363,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"greatsword|phb",
+				"musket|dmg"
+			],
 			"traitTags": [
 				"Siege Monster"
 			],
@@ -3285,6 +3389,10 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"savingThrowForced": [
+				"dexterity",
+				"strength"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -3392,6 +3500,9 @@
 						"The giff makes two Morningstar attacks or one Double-Barreled Musket attack."
 					]
 				}
+			],
+			"attachedItems": [
+				"morningstar|phb"
 			],
 			"traitTags": [
 				"Legendary Resistances"
@@ -3520,6 +3631,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"greatsword|phb"
+			],
 			"actionTags": [
 				"Multiattack"
 			],
@@ -3540,6 +3654,10 @@
 			],
 			"conditionInflictSpell": [
 				"restrained"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -3669,6 +3787,11 @@
 			"conditionInflictSpell": [
 				"invisible",
 				"restrained"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"dexterity",
+				"intelligence"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -3805,6 +3928,11 @@
 				"charmed",
 				"invisible",
 				"restrained"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"dexterity",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -3983,6 +4111,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"musket|dmg",
+				"shortsword|phb"
+			],
 			"actionTags": [
 				"Multiattack"
 			],
@@ -4070,6 +4202,9 @@
 						"When it would take damage from a fall, the hadozee extends its skin membranes to reduce the fall's damage to 0, provided it isn't wearing heavy armor."
 					]
 				}
+			],
+			"attachedItems": [
+				"dagger|phb"
 			],
 			"languageTags": [
 				"C"
@@ -4175,6 +4310,10 @@
 						"The hadozee halves the damage that it takes from an attack that hits it, provided it can see the attacker."
 					]
 				}
+			],
+			"attachedItems": [
+				"light crossbow|phb",
+				"shortsword|phb"
 			],
 			"actionTags": [
 				"Multiattack"
@@ -4292,6 +4431,10 @@
 				"incapacitated",
 				"stunned"
 			],
+			"savingThrowForced": [
+				"constitution",
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -4382,6 +4525,9 @@
 			],
 			"conditionInflict": [
 				"blinded"
+			],
+			"savingThrowForced": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -4474,12 +4620,13 @@
 				{
 					"name": "Phase (2/Day)",
 					"entries": [
-						"The dragon becomes partially incorporeal for as long as it maintains concentration on the effect (as if concentrating on a spell). While partially incorporeal, the dragon has resistance to bludgeoning, piercing, and slashing damage."
+						"The dragon becomes partially incorporeal for as long as it maintains {@status concentration} on the effect (as if {@status concentration||concentrating} on a spell). While partially incorporeal, the dragon has resistance to bludgeoning, piercing, and slashing damage."
 					]
 				}
 			],
 			"dragonAge": "wyrmling",
 			"traitTags": [
+				"Tunneler",
 				"Unusual Nature"
 			],
 			"senseTags": [
@@ -4498,6 +4645,9 @@
 			"miscTags": [
 				"AOE",
 				"MW"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -4599,6 +4749,10 @@
 			],
 			"conditionInflict": [
 				"incapacitated"
+			],
+			"savingThrowForced": [
+				"constitution",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -4728,6 +4882,12 @@
 			],
 			"conditionInflictSpell": [
 				"invisible"
+			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -4865,6 +5025,9 @@
 				"AOE",
 				"MW",
 				"RW"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -5026,6 +5189,14 @@
 				"invisible",
 				"paralyzed"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"strength",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -5119,6 +5290,9 @@
 			],
 			"conditionInflict": [
 				"poisoned"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -5235,6 +5409,9 @@
 			],
 			"conditionInflict": [
 				"poisoned"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -5407,6 +5584,10 @@
 			],
 			"conditionInflictSpell": [
 				"invisible"
+			],
+			"savingThrowForced": [
+				"constitution",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -5671,6 +5852,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"javelin|phb"
+			],
 			"traitTags": [
 				"Amorphous",
 				"Hold Breath"
@@ -5785,6 +5969,10 @@
 						"{@atk rw} {@hit 4} to hit, range 30/90 ft., one target. {@h}7 ({@damage 1d10 + 2}) piercing damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"pistol|dmg",
+				"spear|phb"
 			],
 			"traitTags": [
 				"Amorphous",
@@ -5941,6 +6129,12 @@
 			"miscTags": [
 				"MW"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -6095,6 +6289,12 @@
 			"conditionInflict": [
 				"unconscious"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -6190,6 +6390,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"dagger|phb"
+			],
 			"languageTags": [
 				"DS",
 				"TP"
@@ -6205,6 +6408,12 @@
 				"MW",
 				"RW",
 				"THW"
+			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -6340,6 +6549,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"trident|phb"
+			],
 			"traitTags": [
 				"Hold Breath"
 			],
@@ -6367,6 +6579,11 @@
 				"MW",
 				"RW",
 				"THW"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity",
+				"intelligence",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -6499,6 +6716,9 @@
 				"MW",
 				"RCH"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -6604,7 +6824,7 @@
 				{
 					"name": "Phantasmal Form (3/Day)",
 					"entries": [
-						"The clown veils itself and everything it is wearing and carrying in an illusion that makes it look like some other creature of its size or smaller (such as a child) or an object small enough to fit in the clown's space (such as a floating balloon). Maintaining this effect requires the clown's concentration (as if concentrating on a spell), and the illusion fails to hold up to physical inspection. As an action, a creature that can see the clown's illusory form can make a {@dc 15} Wisdom (Insight) check, piercing the illusion and discerning the clown's true form on a success."
+						"The clown veils itself and everything it is wearing and carrying in an illusion that makes it look like some other creature of its size or smaller (such as a child) or an object small enough to fit in the clown's space (such as a floating balloon). Maintaining this effect requires the clown's {@status concentration} (as if {@status concentration||concentrating} on a spell), and the illusion fails to hold up to physical inspection. As an action, a creature that can see the clown's illusory form can make a {@dc 15} Wisdom (Insight) check, piercing the illusion and discerning the clown's true form on a success."
 					]
 				}
 			],
@@ -6628,6 +6848,10 @@
 			],
 			"conditionInflict": [
 				"incapacitated"
+			],
+			"savingThrowForced": [
+				"dexterity",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -6712,6 +6936,9 @@
 			"conditionInflict": [
 				"paralyzed",
 				"poisoned"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -6865,6 +7092,9 @@
 			],
 			"conditionInflict": [
 				"blinded"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -7127,6 +7357,9 @@
 			"conditionInflictSpell": [
 				"invisible"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -7219,6 +7452,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"javelin|phb"
+			],
 			"traitTags": [
 				"Hold Breath"
 			],
@@ -7238,6 +7474,9 @@
 				"MW",
 				"RW",
 				"THW"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -7382,6 +7621,10 @@
 			"conditionInflict": [
 				"blinded",
 				"incapacitated"
+			],
+			"savingThrowForced": [
+				"charisma",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -7748,6 +7991,12 @@
 			"conditionInflictSpell": [
 				"invisible"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
+			"savingThrowForcedSpell": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -7846,6 +8095,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"light crossbow|phb"
+			],
 			"traitTags": [
 				"Spider Climb",
 				"Unusual Nature"
@@ -7863,6 +8115,9 @@
 			"miscTags": [
 				"RNG",
 				"RW"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -7969,7 +8224,7 @@
 				{
 					"name": "Ship Invisibility (Recharges after a Short or Long Rest)",
 					"entries": [
-						"A ship upon which the captain stands, along with all creatures and objects aboard it, becomes {@condition invisible} to creatures not aboard the ship. The captain must concentrate on this magical effect to maintain it (as if concentrating on a spell), and it lasts for up to 1 hour. The effect ends if the captain leaves the ship."
+						"A ship upon which the captain stands, along with all creatures and objects aboard it, becomes {@condition invisible} to creatures not aboard the ship. The captain must concentrate on this magical effect to maintain it (as if {@status concentration||concentrating} on a spell), and it lasts for up to 1 hour. The effect ends if the captain leaves the ship."
 					]
 				}
 			],
@@ -7980,6 +8235,9 @@
 						"The captain halves the damage that it takes from an attack that hits it. The captain must be able to see the attacker."
 					]
 				}
+			],
+			"attachedItems": [
+				"heavy crossbow|phb"
 			],
 			"traitTags": [
 				"Spider Climb",
@@ -7998,6 +8256,9 @@
 			"miscTags": [
 				"RNG",
 				"RW"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -8155,6 +8416,12 @@
 				"charmed",
 				"incapacitated"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true
 		},
@@ -8252,6 +8519,11 @@
 				"blinded",
 				"frightened",
 				"restrained"
+			],
+			"savingThrowForced": [
+				"constitution",
+				"dexterity",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -8356,12 +8628,13 @@
 				{
 					"name": "Phase (2/Day)",
 					"entries": [
-						"The dragon becomes partially incorporeal for as long as it maintains concentration on the effect (as if concentrating on a spell). While partially incorporeal, the dragon has resistance to bludgeoning, piercing, and slashing damage."
+						"The dragon becomes partially incorporeal for as long as it maintains {@status concentration} on the effect (as if {@status concentration||concentrating} on a spell). While partially incorporeal, the dragon has resistance to bludgeoning, piercing, and slashing damage."
 					]
 				}
 			],
 			"dragonAge": "young",
 			"traitTags": [
+				"Tunneler",
 				"Unusual Nature"
 			],
 			"senseTags": [
@@ -8383,6 +8656,9 @@
 				"AOE",
 				"MW",
 				"RCH"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -8518,6 +8794,9 @@
 				"AOE",
 				"MW",
 				"RCH"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -8660,6 +8939,9 @@
 			],
 			"miscTags": [
 				"MW"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,

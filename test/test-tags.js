@@ -19,6 +19,10 @@ const WALKER = MiscUtil.getWalker({
 
 const ALL_URLS = new Set();
 
+const CAT_ID_BLOCKLIST = new Set([
+	Parser.CAT_ID_PAGE,
+]);
+
 class TagTestUtil {
 	static _CLASS_SUBCLASS_LOOKUP = {};
 
@@ -29,10 +33,14 @@ class TagTestUtil {
 
 	static async _pInit_pPopulateUrls () {
 		const primaryIndex = Omnidexer.decompressIndex(await utS.UtilSearchIndex.pGetIndex({doLogging: false, noFilter: true}));
-		primaryIndex.forEach(it => ALL_URLS.add(`${UrlUtil.categoryToPage(it.c)}#${(it.u).toLowerCase().trim()}`));
+		primaryIndex
+			.filter(it => !CAT_ID_BLOCKLIST.has(it.c))
+			.forEach(it => ALL_URLS.add(`${UrlUtil.categoryToPage(it.c).toLowerCase()}#${(it.u).toLowerCase().trim()}`));
 		const highestId = primaryIndex.last().id;
 		const secondaryIndexItem = Omnidexer.decompressIndex(await utS.UtilSearchIndex.pGetIndexAdditionalItem({baseIndex: highestId + 1, doLogging: false}));
-		secondaryIndexItem.forEach(it => ALL_URLS.add(`${UrlUtil.categoryToPage(it.c)}#${(it.u).toLowerCase().trim()}`));
+		secondaryIndexItem
+			.filter(it => !CAT_ID_BLOCKLIST.has(it.c))
+			.forEach(it => ALL_URLS.add(`${UrlUtil.categoryToPage(it.c).toLowerCase()}#${(it.u).toLowerCase().trim()}`));
 	}
 
 	static async _pInit_pPopulateClassSubclassIndex () {
@@ -175,6 +183,21 @@ class GenericDataCheck extends DataTesterBase {
 				});
 		});
 	}
+
+	static _testReprintedAs (file, obj, tag) {
+		if (!obj.reprintedAs) return;
+
+		obj.reprintedAs
+			.forEach(rep => {
+				const _tag = rep.tag ?? tag;
+				const _uid = rep.uid ?? rep;
+
+				const url = getEncoded(_uid, _tag);
+				if (!ALL_URLS.has(url)) {
+					this._addMessage(`Missing link: ${url} in file ${file} (evaluates to "${url}") in "feats"\nSimilar URLs were:\n${getSimilar(url)}\n`);
+				}
+			});
+	}
 }
 
 function getSimilar (url) {
@@ -189,20 +212,21 @@ function getSimilar (url) {
 
 function getEncoded (str, tag) {
 	const [name, source] = str.split("|");
-	return `${Renderer.hover.TAG_TO_PAGE[tag]}#${UrlUtil.encodeForHash([name, Parser.getTagSource(tag, source)])}`.toLowerCase().trim();
+	return `${Renderer.tag.getPage(tag)}#${UrlUtil.encodeForHash([name, Parser.getTagSource(tag, source)])}`.toLowerCase().trim();
 }
 
 function getEncodedDeity (str, tag) {
 	const [name, pantheon, source] = str.split("|");
-	return `${Renderer.hover.TAG_TO_PAGE[tag]}#${UrlUtil.encodeForHash([name, pantheon, Parser.getTagSource(tag, source)])}`.toLowerCase().trim();
+	return `${Renderer.tag.getPage(tag)}#${UrlUtil.encodeForHash([name, pantheon, Parser.getTagSource(tag, source)])}`.toLowerCase().trim();
 }
 
 class LinkCheck extends DataTesterBase {
 	static registerParsedPrimitiveHandlers (parsedJsonChecker) {
 		parsedJsonChecker.addPrimitiveHandler("string", this._checkString.bind(this));
+		parsedJsonChecker.addPrimitiveHandler("object", this._checkObject.bind(this));
 	}
 
-	static _checkString (str, {filePath}) {
+	static _checkString (str, {filePath, isStatblock = false}) {
 		let match;
 		while ((match = LinkCheck.RE.exec(str))) {
 			const tag = match[1];
@@ -235,12 +259,22 @@ class LinkCheck extends DataTesterBase {
 				}
 			}
 
-			const url = `${Renderer.hover.TAG_TO_PAGE[tag]}#${UrlUtil.encodeForHash(toEncode)}`.toLowerCase().trim()
+			const url = `${Renderer.tag.getPage(tag)}#${UrlUtil.encodeForHash(toEncode)}`.toLowerCase().trim()
 				.replace(/%5c/gi, ""); // replace slashes
 			if (!ALL_URLS.has(url)) {
-				this._addMessage(`Missing link: ${match[0]} in file ${filePath} (evaluates to "${url}")\nSimilar URLs were:\n${getSimilar(url)}\n`);
+				this._addMessage(`Missing link: ${isStatblock ? `(as "statblock" entry) ` : ""}${match[0]} in file ${filePath} (evaluates to "${url}")\nSimilar URLs were:\n${getSimilar(url)}\n`);
 			}
 		}
+	}
+
+	static _checkObject (obj, {filePath}) {
+		if (obj.type !== "statblock") return obj;
+
+		// TODO(Future) expand/tweak support as required
+		const asStr = `{@${obj.tag} ${obj.name}|${obj.source || ""}}`;
+		this._checkString(asStr, {filePath, isStatblock: true});
+
+		return obj;
 	}
 }
 LinkCheck._RE_TAG_BLOCKLIST = new Set(["quickref"]);
@@ -355,7 +389,7 @@ class ItemDataCheck extends GenericDataCheck {
 		}
 
 		if (root.baseItem) {
-			const url = `${Renderer.hover.TAG_TO_PAGE.item}#${UrlUtil.encodeForHash(root.baseItem.split("|"))}`
+			const url = `${Renderer.tag.getPage("item")}#${UrlUtil.encodeForHash(root.baseItem.split("|"))}`
 				.toLowerCase()
 				.trim()
 				.replace(/%5c/gi, "");
@@ -470,7 +504,7 @@ class ScaleDiceCheck extends DataTesterBase {
 			const spl = m2.split("|");
 			if (spl.length < 3) {
 				this._addMessage(`${m1} tag "${str}" was too short!\n`);
-			} else if (spl.length > 4) {
+			} else if (spl.length > 5) {
 				this._addMessage(`${m1} tag "${str}" was too long!\n`);
 			} else {
 				let range;
@@ -481,7 +515,7 @@ class ScaleDiceCheck extends DataTesterBase {
 					return;
 				}
 				if (range.size < 2) this._addMessage(`Invalid scaling dice in file ${filePath}: range "${spl[1]}" has too few entries! Should be 2 or more.\n`);
-				if (spl[4] && spl[4] !== "psi") this._addMessage(`Unknown mode "${spl[4]}".\n`);
+				if (spl[3] && spl[3] !== "psi") this._addMessage(`Unknown mode "${spl[4]}".\n`);
 			}
 			return m0;
 		});
@@ -494,7 +528,7 @@ class StripTagTest extends DataTesterBase {
 	}
 
 	static _checkString (str, {filePath}) {
-		if (filePath === "./data/bestiary/traits.json") return;
+		if (filePath === "./data/bestiary/template.json") return;
 
 		try {
 			Renderer.stripTags(str);
@@ -516,7 +550,7 @@ class TableDiceTest extends DataTesterBase {
 	static _checkTable (obj, {filePath}) {
 		if (obj.type !== "table") return;
 
-		const autoRollMode = Renderer.getAutoConvertedTableRollMode(obj);
+		const autoRollMode = Renderer.table.getAutoConvertedRollMode(obj);
 		if (!autoRollMode) return;
 
 		const toRenderLabel = autoRollMode ? RollerUtil.getFullRollCol(obj.colLabels[0]) : null;
@@ -570,7 +604,7 @@ class TableDiceTest extends DataTesterBase {
 				const max = wrpRollTree.tree.max({});
 				for (let i = min; i < max + 1; ++i) possibleRolls.add(i);
 			} else {
-				if (!hasPrompt) errors.push(`"${obj.colLabels[0]}" was not a valid rollable header?!`);
+				if (!hasPrompt) errors.push(`${JSON.stringify(obj.colLabels[0])} was not a valid rollable header?!`);
 			}
 		});
 
@@ -654,7 +688,7 @@ class LootDataCheck extends GenericDataCheck {
 	static pRun () {
 		function handleItem (it) {
 			const toCheck = typeof it === "string" ? {name: it, source: Parser.SRC_DMG} : it;
-			const url = `${Renderer.hover.TAG_TO_PAGE["item"]}#${UrlUtil.encodeForHash([toCheck.name, toCheck.source])}`.toLowerCase().trim();
+			const url = `${Renderer.tag.getPage("item")}#${UrlUtil.encodeForHash([toCheck.name, toCheck.source])}`.toLowerCase().trim();
 			if (!ALL_URLS.has(url)) this._addMessage(`Missing link: ${JSON.stringify(it)} in file "${LootDataCheck.file}" (evaluates to "${url}")\nSimilar URLs were:\n${getSimilar(url)}\n`);
 		}
 
@@ -802,6 +836,7 @@ class RaceDataCheck extends GenericDataCheck {
 	static _handleRaceOrSubraceRaw (file, rsr, r) {
 		this._testAdditionalSpells(file, rsr);
 		this._testAdditionalFeats(file, rsr);
+		this._testReprintedAs(file, rsr, "race");
 	}
 
 	static pRun () {
@@ -839,9 +874,18 @@ class BackgroundDataCheck extends GenericDataCheck {
 
 class BestiaryDataCheck extends GenericDataCheck {
 	static _handleCreature (file, mon) {
+		this._testReprintedAs(file, mon, "creature");
+
 		if (mon.summonedBySpell) {
 			const url = getEncoded(mon.summonedBySpell, "spell");
 			if (!ALL_URLS.has(url)) this._addMessage(`Missing link: ${mon.summonedBySpell} in file ${file} "summonedBySpell" (evaluates to "${url}")\nSimilar URLs were:\n${getSimilar(url)}\n`);
+		}
+
+		if (mon.attachedItems) {
+			mon.attachedItems.forEach(s => {
+				const url = getEncoded(s, "item");
+				if (!ALL_URLS.has(url)) this._addMessage(`Missing link: ${s} in file ${file} (evaluates to "${url}") in "attachedItems"\nSimilar URLs were:\n${getSimilar(url)}\n`);
+			});
 		}
 	}
 
@@ -880,6 +924,19 @@ class DeckDataCheck extends GenericDataCheck {
 	}
 }
 
+class CultsBoonsDataCheck extends GenericDataCheck {
+	static _handleEntity (file, cb, prop) {
+		this._testReprintedAs(file, cb, prop);
+	}
+
+	static pRun () {
+		const file = `data/cultsboons.json`;
+		const json = ut.readJson(`./${file}`);
+		json.cult.forEach(ent => this._handleEntity(file, ent, "cult"));
+		json.boon.forEach(ent => this._handleEntity(file, ent, "boon"));
+	}
+}
+
 class DuplicateEntityCheck extends DataTesterBase {
 	static registerParsedFileCheckers (parsedJsonChecker) {
 		parsedJsonChecker.registerFileHandler(this);
@@ -907,7 +964,7 @@ class DuplicateEntityCheck extends DataTesterBase {
 
 					if (!ent._versions) return;
 
-					isSkipVersionCheck || DataUtil.proxy.getVersions(prop, ent)
+					isSkipVersionCheck || DataUtil.proxy.getVersions(prop, ent, {isExternalApplicationIdentityOnly: true})
 						.forEach((entVer, j) => {
 							this._doAddPosition({prop, ent: entVer, ixArray: i, ixVersion: j, positions});
 						});
@@ -1250,6 +1307,7 @@ async function main () {
 		BackgroundDataCheck,
 		BestiaryDataCheck,
 		DeckDataCheck,
+		CultsBoonsDataCheck,
 	];
 	DataTester.register({ClazzDataTesters});
 

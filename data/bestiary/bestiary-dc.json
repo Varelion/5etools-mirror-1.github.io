@@ -17,6 +17,7 @@
 		{
 			"name": "Ebondeath",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "DC",
 			"size": [
 				"M"
@@ -149,6 +150,10 @@
 				"frightened",
 				"incapacitated"
 			],
+			"savingThrowForced": [
+				"charisma",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true
 		},
@@ -251,6 +256,11 @@
 						"{@atk rw} {@hit 9} to hit, range 80/320 ft., one target. {@h}8 ({@damage 1d6 + 5}) piercing damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"dagger|phb",
+				"shortbow|phb",
+				"shortsword|phb"
 			],
 			"languageTags": [
 				"C"
@@ -399,6 +409,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"quarterstaff|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -416,6 +429,10 @@
 			],
 			"conditionInflictSpell": [
 				"incapacitated"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"dexterity"
 			],
 			"hasToken": true
 		},
@@ -552,6 +569,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"quarterstaff|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -573,6 +593,11 @@
 				"invisible",
 				"paralyzed",
 				"unconscious"
+			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"dexterity",
+				"wisdom"
 			],
 			"hasToken": true
 		},
@@ -708,6 +733,10 @@
 						"When a creature the warrior can see attacks a target other than the warrior that is within 5 feet of the warrior, the warrior can use their reaction to impose disadvantage on the attack roll. The warrior must be wielding a shield."
 					]
 				}
+			],
+			"attachedItems": [
+				"longbow|phb",
+				"longsword|phb"
 			],
 			"languageTags": [
 				"C"

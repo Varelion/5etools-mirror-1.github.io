@@ -250,6 +250,10 @@
 			"miscTags": [
 				"MW"
 			],
+			"savingThrowForcedSpell": [
+				"dexterity",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -441,6 +445,11 @@
 				"RW",
 				"THW"
 			],
+			"savingThrowForced": [
+				"charisma",
+				"constitution",
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -576,7 +585,7 @@
 				{
 					"name": "Blizzard Veil",
 					"entries": [
-						"Auril creates a magical blizzard in a 30-foot-radius sphere centered on herself. The area within the sphere is heavily obscured, and the sphere moves with Auril. The effect lasts until Auril drops to 0 hit points in this form, until she chooses to end the effect (no action required), or until her concentration is broken (as if concentrating on a spell)."
+						"Auril creates a magical blizzard in a 30-foot-radius sphere centered on herself. The area within the sphere is heavily obscured, and the sphere moves with Auril. The effect lasts until Auril drops to 0 hit points in this form, until she chooses to end the effect (no action required), or until her {@status concentration} is broken (as if {@status concentration||concentrating} on a spell)."
 					]
 				}
 			],
@@ -625,6 +634,9 @@
 			"conditionInflict": [
 				"blinded"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -632,6 +644,7 @@
 		{
 			"name": "Avarice",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "IDRotF",
 			"page": 269,
 			"size": [
@@ -810,6 +823,13 @@
 			"conditionInflictSpell": [
 				"incapacitated"
 			],
+			"savingThrowForced": [
+				"charisma"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -905,13 +925,15 @@
 			"conditionInflict": [
 				"prone"
 			],
+			"savingThrowForced": [
+				"strength"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
 		},
 		{
 			"name": "Battlehammer Dwarf",
-			"isNamedCreature": true,
 			"source": "IDRotF",
 			"page": 107,
 			"_copy": {
@@ -1050,6 +1072,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"greataxe|phb",
+				"spear|phb"
+			],
 			"actionTags": [
 				"Multiattack"
 			],
@@ -1167,6 +1193,9 @@
 			],
 			"conditionInflict": [
 				"poisoned"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -1331,6 +1360,10 @@
 			],
 			"conditionInflict": [
 				"charmed"
+			],
+			"savingThrowForced": [
+				"dexterity",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -1596,6 +1629,9 @@
 			"conditionInflict": [
 				"blinded"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -1687,6 +1723,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"greatsword|phb",
+				"light crossbow|phb"
+			],
 			"traitTags": [
 				"Magic Resistance",
 				"Unusual Nature"
@@ -1713,6 +1753,7 @@
 		{
 			"name": "Dzaan's Simulacrum",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "IDRotF",
 			"page": 270,
 			"size": [
@@ -1836,6 +1877,14 @@
 			],
 			"conditionInflictSpell": [
 				"invisible"
+			],
+			"savingThrowForced": [
+				"dexterity"
+			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"dexterity",
+				"intelligence"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2100,6 +2149,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"maul|phb"
+			],
 			"senseTags": [
 				"D"
 			],
@@ -2131,6 +2183,12 @@
 			"conditionInflictSpell": [
 				"charmed",
 				"prone"
+			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"dexterity",
+				"strength",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2216,6 +2274,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"greataxe|phb"
+			],
 			"traitTags": [
 				"Unusual Nature"
 			],
@@ -2239,6 +2300,9 @@
 			],
 			"conditionInflict": [
 				"paralyzed"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2347,6 +2411,9 @@
 			],
 			"miscTags": [
 				"AOE"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2603,6 +2670,10 @@
 				"frightened",
 				"poisoned"
 			],
+			"savingThrowForced": [
+				"constitution",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -2716,6 +2787,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"laser pistol|dmg"
+			],
 			"traitTags": [
 				"Magic Resistance"
 			],
@@ -2751,6 +2825,14 @@
 			],
 			"conditionInflictSpell": [
 				"charmed"
+			],
+			"savingThrowForced": [
+				"intelligence"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"constitution",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2866,6 +2948,12 @@
 				"grappled",
 				"stunned"
 			],
+			"savingThrowForced": [
+				"intelligence"
+			],
+			"savingThrowForcedSpell": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -2962,6 +3050,10 @@
 						"When the goliath takes damage, it reduces the damage taken by 9 ({@dice 1d12 + 3})."
 					]
 				}
+			],
+			"attachedItems": [
+				"greataxe|phb",
+				"javelin|phb"
 			],
 			"actionTags": [
 				"Multiattack"
@@ -3118,6 +3210,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"greataxe|phb"
+			],
 			"traitTags": [
 				"Keen Senses",
 				"Shapechanger"
@@ -3136,6 +3231,9 @@
 			],
 			"miscTags": [
 				"MW"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -3259,6 +3357,14 @@
 			"conditionInflictSpell": [
 				"invisible"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"dexterity",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -3353,6 +3459,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"battleaxe|phb",
+				"javelin|phb"
+			],
 			"actionTags": [
 				"Multiattack"
 			],
@@ -3370,6 +3480,9 @@
 			],
 			"conditionInflict": [
 				"frightened"
+			],
+			"savingThrowForced": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -3584,6 +3697,9 @@
 			"damageTags": [
 				"Y"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -3727,6 +3843,9 @@
 			"miscTags": [
 				"MW"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -3814,6 +3933,10 @@
 						"{@atk mw,rw} {@hit 0} to hit, reach 5 ft. or range 30/120 ft., one target. {@h}1 ({@damage 1d6 - 2}) piercing damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"dagger|phb",
+				"javelin|phb"
 			],
 			"traitTags": [
 				"Pack Tactics",
@@ -3909,6 +4032,9 @@
 						"{@atk mw} {@hit 1} to hit, reach 5 ft., one target. {@h}2 ({@damage 1d6 - 1}) piercing damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"javelin|phb"
 			],
 			"traitTags": [
 				"Undead Fortitude",
@@ -4026,6 +4152,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"heavy crossbow|phb",
+				"sickle|phb"
+			],
 			"traitTags": [
 				"Keen Senses"
 			],
@@ -4138,6 +4268,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"javelin|phb",
+				"warhammer|phb"
+			],
 			"traitTags": [
 				"Brute"
 			],
@@ -4211,6 +4345,7 @@
 		{
 			"name": "Kingsport",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "IDRotF",
 			"page": 243,
 			"size": [
@@ -4609,6 +4744,9 @@
 			"conditionInflict": [
 				"grappled"
 			],
+			"savingThrowForced": [
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -4819,6 +4957,9 @@
 			"senseTags": [
 				"D"
 			],
+			"savingThrowForced": [
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -4951,6 +5092,9 @@
 			"conditionInflict": [
 				"prone"
 			],
+			"savingThrowForced": [
+				"strength"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -4958,6 +5102,7 @@
 		{
 			"name": "Nass Lantomir's Ghost",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "IDRotF",
 			"page": 272,
 			"size": [
@@ -5133,6 +5278,13 @@
 				"frightened",
 				"incapacitated"
 			],
+			"savingThrowForced": [
+				"charisma",
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -5140,6 +5292,7 @@
 		{
 			"name": "Prisoner 237",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "IDRotF",
 			"page": 160,
 			"size": [
@@ -5257,6 +5410,10 @@
 			],
 			"conditionInflictSpell": [
 				"unconscious"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -5740,6 +5897,7 @@
 		{
 			"name": "Spellix Romwod",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "IDRotF",
 			"page": 144,
 			"size": [
@@ -5870,6 +6028,9 @@
 			"conditionInflictSpell": [
 				"charmed"
 			],
+			"savingThrowForcedSpell": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluffImages": true
 		},
@@ -5970,6 +6131,9 @@
 			"miscTags": [
 				"MW",
 				"RCH"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -6106,6 +6270,9 @@
 			],
 			"conditionInflict": [
 				"grappled"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -6244,6 +6411,7 @@
 				}
 			],
 			"traitTags": [
+				"Tunneler",
 				"Unusual Nature"
 			],
 			"senseTags": [
@@ -6323,6 +6491,7 @@
 		{
 			"name": "Vellynne Harpell",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "IDRotF",
 			"page": 273,
 			"size": [
@@ -6478,6 +6647,11 @@
 				"poisoned",
 				"prone"
 			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"dexterity",
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -6577,6 +6751,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"sling|phb",
+				"spear|phb"
+			],
 			"actionTags": [
 				"Multiattack"
 			],
@@ -6602,6 +6780,9 @@
 			],
 			"conditionInflictSpell": [
 				"deafened"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -6676,6 +6857,9 @@
 						"{@atk mw,rw} {@hit 6} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}14 ({@damage 3d6 + 4}) piercing damage, or 17 ({@damage 3d8 + 4}) piercing damage if used to make a ranged attack or used with two hands to make a melee attack."
 					]
 				}
+			],
+			"attachedItems": [
+				"spear|phb"
 			],
 			"actionTags": [
 				"Multiattack"
@@ -6876,7 +7060,7 @@
 				{
 					"name": "Invisibility {@recharge 4}",
 					"entries": [
-						"Xardorok magically turns {@condition invisible} until he attacks, he casts a spell, he uses his Enlarge, or his concentration is broken (as if concentrating on a spell). Any equipment Xardorok wears or carries is {@condition invisible} with him."
+						"Xardorok magically turns {@condition invisible} until he attacks, he casts a spell, he uses his Enlarge, or his {@status concentration} is broken (as if {@status concentration||concentrating} on a spell). Any equipment Xardorok wears or carries is {@condition invisible} with him."
 					]
 				}
 			],
@@ -6920,6 +7104,12 @@
 			],
 			"conditionInflictSpell": [
 				"paralyzed"
+			],
+			"savingThrowForced": [
+				"dexterity"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,

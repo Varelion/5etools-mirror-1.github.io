@@ -101,6 +101,11 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"dagger|phb",
+				"shortbow|phb",
+				"shortsword|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -184,6 +189,9 @@
 			"conditionInflict": [
 				"paralyzed",
 				"poisoned"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true
 		},
@@ -299,6 +307,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"quarterstaff|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -313,6 +324,9 @@
 			],
 			"miscTags": [
 				"MW"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity"
 			],
 			"hasToken": true
 		},
@@ -428,6 +442,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"quarterstaff|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -442,6 +459,9 @@
 			],
 			"miscTags": [
 				"MW"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity"
 			],
 			"hasToken": true
 		},
@@ -563,6 +583,7 @@
 		{
 			"name": "Tooth-N-Claw",
 			"isNpc": true,
+			"isNamedCreature": true,
 			"source": "SLW",
 			"size": [
 				"M"
@@ -656,6 +677,9 @@
 			"miscTags": [
 				"AOE",
 				"MW"
+			],
+			"savingThrowForced": [
+				"dexterity"
 			],
 			"hasToken": true
 		},
@@ -775,6 +799,10 @@
 					"name": "Warrior (Defender)",
 					"source": "SLW"
 				}
+			],
+			"attachedItems": [
+				"longbow|phb",
+				"longsword|phb"
 			],
 			"languageTags": [
 				"C"

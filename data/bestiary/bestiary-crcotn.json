@@ -117,6 +117,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"spear|phb"
+			],
 			"traitTags": [
 				"Amphibious"
 			],
@@ -154,6 +157,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 21,
 			"_copy": {
 				"name": "Orc",
 				"source": "MM",
@@ -170,13 +174,15 @@
 				"C",
 				"G"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Aloysia Telfan",
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 61,
 			"_copy": {
 				"name": "Occult Initiate",
 				"source": "CRCotN",
@@ -203,7 +209,8 @@
 				"L",
 				"E"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Alyxian Aboleth",
@@ -345,6 +352,10 @@
 			"conditionInflict": [
 				"charmed",
 				"restrained"
+			],
+			"savingThrowForced": [
+				"strength",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -498,6 +509,9 @@
 				"name": "Alyxian the Absolved",
 				"source": "CRCotN"
 			},
+			"attachedItems": [
+				"spear|phb"
+			],
 			"traitTags": [
 				"Legendary Resistances"
 			],
@@ -528,6 +542,12 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"savingThrowForced": [
+				"constitution"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluffImages": true
@@ -701,6 +721,10 @@
 				"prone",
 				"restrained"
 			],
+			"savingThrowForced": [
+				"constitution",
+				"strength"
+			],
 			"hasToken": true,
 			"hasFluffImages": true
 		},
@@ -854,6 +878,9 @@
 				"name": "Alyxian the Dispossessed",
 				"source": "CRCotN"
 			},
+			"attachedItems": [
+				"spear|phb"
+			],
 			"traitTags": [
 				"Legendary Resistances"
 			],
@@ -884,6 +911,10 @@
 			"conditionInflict": [
 				"exhaustion",
 				"petrified"
+			],
+			"savingThrowForced": [
+				"charisma",
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluffImages": true
@@ -996,6 +1027,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"ruidium dart|crcotn"
+			],
 			"traitTags": [
 				"Immutable Form",
 				"Magic Resistance",
@@ -1019,6 +1053,10 @@
 			],
 			"conditionInflict": [
 				"exhaustion"
+			],
+			"savingThrowForced": [
+				"charisma",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -1177,6 +1215,9 @@
 			"conditionInflict": [
 				"grappled"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluffImages": true
 		},
@@ -1290,6 +1331,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 82,
 			"_copy": {
 				"name": "Occult Silvertongue",
 				"source": "CRCotN",
@@ -1317,13 +1359,15 @@
 				"L",
 				"N"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Ashann",
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 115,
 			"_copy": {
 				"name": "Occult Initiate",
 				"source": "CRCotN",
@@ -1350,7 +1394,8 @@
 				"C",
 				"N"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Ayo Jabe (Tier 1)",
@@ -1460,6 +1505,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"longbow|phb"
+			],
 			"traitTags": [
 				"Amphibious"
 			],
@@ -1484,6 +1532,9 @@
 			],
 			"conditionInflictSpell": [
 				"charmed"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -1606,6 +1657,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"longbow|phb"
+			],
 			"traitTags": [
 				"Amphibious"
 			],
@@ -1630,6 +1684,9 @@
 			],
 			"conditionInflictSpell": [
 				"charmed"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -1762,6 +1819,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"longbow|phb"
+			],
 			"traitTags": [
 				"Amphibious"
 			],
@@ -1791,6 +1851,12 @@
 			"conditionInflictSpell": [
 				"charmed"
 			],
+			"savingThrowForced": [
+				"charisma"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -1800,6 +1866,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 150,
 			"_copy": {
 				"name": "Ghost",
 				"source": "MM",
@@ -1812,7 +1879,8 @@
 					}
 				}
 			},
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Corrupted Giant Shark",
@@ -1899,6 +1967,10 @@
 			],
 			"conditionInflict": [
 				"exhaustion"
+			],
+			"savingThrowForced": [
+				"charisma",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2027,6 +2099,10 @@
 			"conditionInflict": [
 				"charmed"
 			],
+			"savingThrowForced": [
+				"constitution",
+				"wisdom"
+			],
 			"hasToken": true
 		},
 		{
@@ -2143,6 +2219,9 @@
 				"grappled",
 				"restrained"
 			],
+			"savingThrowForced": [
+				"constitution"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -2250,6 +2329,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"warhammer|phb"
+			],
 			"senseTags": [
 				"D"
 			],
@@ -2273,6 +2355,9 @@
 			],
 			"conditionInflict": [
 				"blinded"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -2384,6 +2469,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"warhammer|phb"
+			],
 			"senseTags": [
 				"D"
 			],
@@ -2407,6 +2495,9 @@
 			],
 			"conditionInflict": [
 				"blinded"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -2529,6 +2620,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"ruidium warhammer|crcotn"
+			],
 			"senseTags": [
 				"D"
 			],
@@ -2555,6 +2649,12 @@
 				"blinded",
 				"exhaustion"
 			],
+			"savingThrowForced": [
+				"charisma"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -2564,7 +2664,7 @@
 			"source": "CRCotN",
 			"page": 71,
 			"_copy": {
-				"name": "Orc",
+				"name": "Orc War Chief",
 				"source": "MM"
 			},
 			"type": {
@@ -2585,10 +2685,11 @@
 			"hasToken": true
 		},
 		{
-			"name": "Foghomer",
+			"name": "Foghome",
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 58,
 			"_copy": {
 				"name": "Priest",
 				"source": "MM",
@@ -2600,7 +2701,7 @@
 					"*": {
 						"mode": "replaceTxt",
 						"replace": "the priest",
-						"with": "Foghomer",
+						"with": "Foghome",
 						"flags": "i"
 					}
 				}
@@ -2613,7 +2714,8 @@
 				"CC",
 				"I"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Galeokaerda",
@@ -2749,6 +2851,12 @@
 			"spellcastingTags": [
 				"O"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"intelligence"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -2877,6 +2985,9 @@
 			],
 			"miscTags": [
 				"AOE"
+			],
+			"savingThrowForced": [
+				"strength"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -3016,6 +3127,12 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"savingThrowForced": [
+				"strength"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -3165,6 +3282,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"ruidium dagger|crcotn"
+			],
 			"traitTags": [
 				"Fey Ancestry"
 			],
@@ -3201,6 +3321,13 @@
 			"conditionInflictSpell": [
 				"restrained"
 			],
+			"savingThrowForced": [
+				"charisma",
+				"strength"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -3210,6 +3337,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 81,
 			"_copy": {
 				"name": "Scholarly Mastermind",
 				"source": "CRCotN",
@@ -3237,7 +3365,8 @@
 				"N",
 				"G"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Insight Acuere",
@@ -3373,6 +3502,13 @@
 			"conditionInflict": [
 				"frightened"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -3454,6 +3590,9 @@
 						"{@atk mw,rw} {@hit 4} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}4 ({@damage 1d4 + 2}) piercing damage plus 7 ({@damage 2d6}) poison damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"dagger|phb"
 			],
 			"actionTags": [
 				"Multiattack"
@@ -3552,6 +3691,9 @@
 						"{@atk mw,rw} {@hit 6} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}5 ({@damage 1d4 + 3}) piercing damage plus 14 ({@damage 4d6}) poison damage."
 					]
 				}
+			],
+			"attachedItems": [
+				"dagger|phb"
 			],
 			"actionTags": [
 				"Multiattack"
@@ -3668,6 +3810,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"dagger|phb",
+				"ruidium shortsword|crcotn"
+			],
 			"actionTags": [
 				"Multiattack"
 			],
@@ -3689,6 +3835,9 @@
 			"conditionInflict": [
 				"exhaustion"
 			],
+			"savingThrowForced": [
+				"charisma"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -3698,6 +3847,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 81,
 			"_copy": {
 				"name": "Scholarly Mastermind",
 				"source": "CRCotN",
@@ -3724,13 +3874,15 @@
 				"L",
 				"N"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Jamil A'alithiya",
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 83,
 			"_copy": {
 				"name": "Monastic High Curator",
 				"source": "CRCotN",
@@ -3758,13 +3910,15 @@
 				"C",
 				"G"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Koris",
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 106,
 			"_copy": {
 				"name": "Assassin",
 				"source": "MM",
@@ -3794,7 +3948,8 @@
 			"spellcastingTags": [
 				"I"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Laurin Ophidas",
@@ -3913,6 +4068,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"dagger|phb"
+			],
 			"actionTags": [
 				"Multiattack"
 			],
@@ -3938,6 +4096,10 @@
 			"conditionInflictSpell": [
 				"paralyzed",
 				"prone"
+			],
+			"savingThrowForcedSpell": [
+				"dexterity",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -4035,6 +4197,9 @@
 			"miscTags": [
 				"AOE",
 				"MW"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -4138,6 +4303,9 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"savingThrowForced": [
+				"strength"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -4268,6 +4436,9 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"savingThrowForced": [
+				"strength"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -4418,6 +4589,10 @@
 				"exhaustion",
 				"prone"
 			],
+			"savingThrowForced": [
+				"charisma",
+				"strength"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -4427,6 +4602,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 150,
 			"_copy": {
 				"name": "Ghost",
 				"source": "MM",
@@ -4439,13 +4615,15 @@
 					}
 				}
 			},
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Meri",
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 150,
 			"_copy": {
 				"name": "Ghost",
 				"source": "MM",
@@ -4458,7 +4636,8 @@
 					}
 				}
 			},
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Monastic High Curator",
@@ -4586,6 +4765,12 @@
 			],
 			"spellcastingTags": [
 				"O"
+			],
+			"savingThrowForced": [
+				"constitution"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -4737,6 +4922,10 @@
 			],
 			"conditionInflictSpell": [
 				"invisible"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"wisdom"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -4997,6 +5186,12 @@
 			"spellcastingTags": [
 				"O"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"intelligence"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -5079,6 +5274,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"shortsword|phb"
+			],
 			"languageTags": [
 				"C",
 				"X"
@@ -5094,6 +5292,13 @@
 			"miscTags": [
 				"AOE",
 				"MW"
+			],
+			"savingThrowForced": [
+				"dexterity"
+			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"dexterity"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -5231,6 +5436,12 @@
 			"conditionInflictSpell": [
 				"charmed"
 			],
+			"savingThrowForced": [
+				"intelligence"
+			],
+			"savingThrowForcedSpell": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true
 		},
@@ -5327,6 +5538,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"longbow|phb",
+				"shortsword|phb"
+			],
 			"traitTags": [
 				"Amphibious",
 				"Fey Ancestry",
@@ -5357,6 +5572,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 168,
 			"_copy": {
 				"name": "Deva",
 				"source": "MM",
@@ -5369,13 +5585,15 @@
 					}
 				}
 			},
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Prolix Yusaf",
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 54,
 			"_copy": {
 				"name": "Scholarly Agent",
 				"source": "CRCotN",
@@ -5413,7 +5631,8 @@
 				"I",
 				"O"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Ruidium Elephant",
@@ -5486,6 +5705,9 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"savingThrowForced": [
+				"strength"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -5678,6 +5900,9 @@
 			"miscTags": [
 				"MW"
 			],
+			"savingThrowForced": [
+				"strength"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -5799,6 +6024,13 @@
 			"conditionInflict": [
 				"frightened"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
+			"savingThrowForcedSpell": [
+				"charisma",
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -5808,6 +6040,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 126,
 			"_copy": {
 				"name": "Scholarly Agent",
 				"source": "CRCotN",
@@ -5834,7 +6067,8 @@
 					"wizard"
 				]
 			},
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Scuttling Serpentmaw",
@@ -5999,6 +6233,9 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"club|phb"
+			],
 			"languageTags": [
 				"C"
 			],
@@ -6019,6 +6256,9 @@
 				"blinded",
 				"deafened",
 				"poisoned"
+			],
+			"savingThrowForcedSpell": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true
@@ -6179,6 +6419,9 @@
 			"conditionInflict": [
 				"grappled",
 				"restrained"
+			],
+			"savingThrowForced": [
+				"constitution"
 			],
 			"hasToken": true,
 			"hasFluff": true,
@@ -6361,6 +6604,9 @@
 			"conditionInflict": [
 				"stunned"
 			],
+			"savingThrowForced": [
+				"wisdom"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -6502,6 +6748,10 @@
 					]
 				}
 			],
+			"attachedItems": [
+				"glaive|phb",
+				"hand crossbow|phb"
+			],
 			"traitTags": [
 				"Fey Ancestry",
 				"Sunlight Sensitivity"
@@ -6532,6 +6782,10 @@
 				"RNG",
 				"RW"
 			],
+			"savingThrowForcedSpell": [
+				"constitution",
+				"dexterity"
+			],
 			"hasToken": true,
 			"hasFluff": true,
 			"hasFluffImages": true
@@ -6541,6 +6795,7 @@
 			"isNpc": true,
 			"isNamedCreature": true,
 			"source": "CRCotN",
+			"page": 126,
 			"_copy": {
 				"name": "Scholarly Excavator",
 				"source": "CRCotN",
@@ -6560,7 +6815,8 @@
 			"size": [
 				"M"
 			],
-			"hasToken": true
+			"hasToken": true,
+			"hasFluffImages": true
 		},
 		{
 			"name": "Young Horizonback Tortoise",
@@ -6631,6 +6887,9 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"savingThrowForced": [
+				"strength"
 			],
 			"hasToken": true
 		}

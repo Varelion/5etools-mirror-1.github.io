@@ -16,8 +16,8 @@ class _BestiaryUtil {
 	}
 
 	static getListDisplayType (mon) {
-		let type = mon._pTypes.asText.uppercaseFirst();
-		if (mon._pTypes.asTextSidekick) type += `, ${mon._pTypes.asTextSidekick.toTitleCase()}`;
+		let type = mon._pTypes.asTextShort.uppercaseFirst();
+		if (mon._pTypes.asTextSidekick) type += `, ${mon._pTypes.asTextSidekick}`;
 		return type;
 	}
 }
@@ -88,21 +88,21 @@ class BestiarySublistManager extends SublistManager {
 			.mousemove(evt => hovTokenMeta.mouseMove(evt, $hovToken[0]))
 			.mouseleave(evt => hovTokenMeta.mouseLeave(evt, $hovToken[0]));
 
-		const $hovImage = $(`<span class="col-1-2 ecgen__visible help help--hover">Image</span>`)
-			.mouseover(evt => this._encounterBuilder.handleImageMouseOver(evt, $hovImage, mon));
+		const $hovImage = $(`<span class="col-1-2 ecgen__visible help help--hover">Image</span>`);
+		Renderer.monster.hover.bindFluffImageMouseover({mon, $ele: $hovImage});
 
 		const $ptCr = (() => {
-			if (!ScaleCreature.isCrInScaleRange(mon)) return $(`<span class="col-1-2 text-center">${cr}</span>`);
+			if (!ScaleCreature.isCrInScaleRange(mon)) return $(`<span class="col-1-2 ve-text-center">${cr}</span>`);
 
-			const $iptCr = $(`<input value="${cr}" class="w-100 text-center form-control form-control--minimal input-xs">`)
+			const $iptCr = $(`<input value="${cr}" class="w-100 ve-text-center form-control form-control--minimal input-xs">`)
 				.click(() => $iptCr.select())
 				.change(() => this._encounterBuilder.pDoCrChange($iptCr, mon, mon._scaledCr));
 
-			return $$`<span class="col-1-2 text-center">${$iptCr}</span>`;
+			return $$`<span class="col-1-2 ve-text-center">${$iptCr}</span>`;
 		})();
 
-		const $eleCount1 = $(`<span class="col-2 text-center">${count}</span>`);
-		const $eleCount2 = $(`<span class="col-2 pr-0 text-center">${count}</span>`);
+		const $eleCount1 = $(`<span class="col-2 ve-text-center">${count}</span>`);
+		const $eleCount2 = $(`<span class="col-2 pr-0 ve-text-center">${count}</span>`);
 
 		const listItem = new ListItem(
 			hash,
@@ -113,6 +113,7 @@ class BestiarySublistManager extends SublistManager {
 				source: Parser.sourceJsonToAbv(mon.source),
 				type,
 				cr,
+				page: mon.page,
 			},
 			{
 				count,
@@ -137,7 +138,7 @@ class BestiarySublistManager extends SublistManager {
 			<a href="#${hash}" draggable="false" class="ecgen__hidden lst--border lst__row-inner">
 				<span class="bold col-5 pl-0">${name}</span>
 				<span class="col-3-8">${type}</span>
-				<span class="col-1-2 text-center">${cr}</span>
+				<span class="col-1-2 ve-text-center">${cr}</span>
 				${$eleCount1}
 			</a>
 
@@ -177,11 +178,91 @@ class BestiarySublistManager extends SublistManager {
 	}
 }
 
+class BestiaryPageBookView extends ListPageBookView {
+	constructor (opts) {
+		super({
+			namePlural: "creatures",
+			pageTitle: "Bestiary Printer View",
+			...opts,
+		});
+	}
+
+	_$getWrpControls ({$wrpContent}) {
+		const out = super._$getWrpControls({$wrpContent});
+		const {$wrpPrint} = out;
+
+		// region Markdown
+		// TODO refactor this and spell markdown section
+		const pGetAsMarkdown = async () => {
+			const toRender = this._bookViewToShow.length ? this._bookViewToShow : [this._fnGetEntLastLoaded()];
+			return RendererMarkdown.monster.pGetMarkdownDoc(toRender);
+		};
+
+		const $btnDownloadMarkdown = $(`<button class="btn btn-default btn-sm">Download as Markdown</button>`)
+			.click(async () => DataUtil.userDownloadText("bestiary.md", await pGetAsMarkdown()));
+
+		const $btnCopyMarkdown = $(`<button class="btn btn-default btn-sm px-2" title="Copy Markdown to Clipboard"><span class="glyphicon glyphicon-copy"/></button>`)
+			.click(async () => {
+				await MiscUtil.pCopyTextToClipboard(await pGetAsMarkdown());
+				JqueryUtil.showCopiedEffect($btnCopyMarkdown);
+			});
+
+		const $btnDownloadMarkdownSettings = $(`<button class="btn btn-default btn-sm px-2" title="Markdown Settings"><span class="glyphicon glyphicon-cog"/></button>`)
+			.click(async () => RendererMarkdown.pShowSettingsModal());
+
+		$$`<div class="ve-flex-v-center btn-group ml-2">
+			${$btnDownloadMarkdown}
+			${$btnCopyMarkdown}
+			${$btnDownloadMarkdownSettings}
+		</div>`.appendTo($wrpPrint);
+		// endregion
+
+		return out;
+	}
+
+	async _pGetRenderContentMeta ({$wrpContent}) {
+		this._bookViewToShow = this._sublistManager.getPinnedEntities()
+			.sort(this._getSorted.bind(this));
+
+		let cntSelectedEnts = 0;
+		let isAnyEntityRendered = false;
+
+		const stack = [];
+
+		const renderCreature = (mon) => {
+			isAnyEntityRendered = true;
+			stack.push(`<div class="bkmv__wrp-item ve-inline-block print__ve-block print__my-2"><table class="w-100 stats stats--book stats--bkmv"><tbody>`);
+			stack.push(Renderer.monster.getCompactRenderedString(mon));
+			stack.push(`</tbody></table></div>`);
+		};
+
+		this._bookViewToShow.forEach(mon => renderCreature(mon));
+		if (!this._bookViewToShow.length && Hist.lastLoadedId != null) {
+			renderCreature(this._fnGetEntLastLoaded());
+		}
+
+		cntSelectedEnts += this._bookViewToShow.length;
+		$wrpContent.append(stack.join(""));
+
+		return {cntSelectedEnts, isAnyEntityRendered};
+	}
+
+	_getSorted (a, b) {
+		return SortUtil.ascSort(a._displayName || a.name, b._displayName || b.name);
+	}
+}
+
 class BestiaryPage extends ListPageMultiSource {
 	static async _prereleaseBrewDataSource ({brewUtil}) {
 		const brew = await brewUtil.pGetBrewProcessed();
 		DataUtil.monster.populateMetaReference(brew);
 		return brew;
+	}
+
+	static _tableView_getEntryPropTransform ({mon, fnGet}) {
+		const fnGetSpellTraits = Renderer.monster.getSpellcastingRenderedTraits.bind(Renderer.monster, Renderer.get());
+		const allEntries = fnGet(mon, {fnGetSpellTraits});
+		return (allEntries || []).map(it => it.rendered || Renderer.get().render(it, 2)).join("");
 	}
 
 	constructor () {
@@ -204,9 +285,7 @@ class BestiaryPage extends ListPageMultiSource {
 			hasAudio: true,
 
 			bookViewOptions: {
-				$btnOpen: $(`#btn-printbook`),
-				$eleNoneVisible: $(`<span class="initial-message">If you wish to view multiple creatures, please first make a list</span>`),
-				pageTitle: "Bestiary Printer View",
+				ClsBookView: BestiaryPageBookView,
 			},
 
 			tableViewOptions: {
@@ -232,24 +311,24 @@ class BestiaryPage extends ListPageMultiSource {
 					_cr: {name: "CR", transform: mon => Parser.monCrToFull(mon.cr, {isMythic: !!mon.mythic})},
 					_trait: {
 						name: "Traits",
-						transform: mon => {
-							const fnGetSpellTraits = Renderer.monster.getSpellcastingRenderedTraits.bind(Renderer.monster, Renderer.get());
-							const allTraits = Renderer.monster.getOrderedTraits(mon, {fnGetSpellTraits});
-							return (allTraits || []).map(it => it.rendered || Renderer.get().render(it, 2)).join("");
-						},
+						transform: mon => BestiaryPage._tableView_getEntryPropTransform({mon, fnGet: Renderer.monster.getOrderedTraits}),
 						flex: 3,
 					},
 					_action: {
 						name: "Actions",
-						transform: mon => {
-							const fnGetSpellTraits = Renderer.monster.getSpellcastingRenderedTraits.bind(Renderer.monster, Renderer.get());
-							const allActions = Renderer.monster.getOrderedActions(mon, {fnGetSpellTraits});
-							return (allActions || []).map(it => it.rendered || Renderer.get().render(it, 2)).join("");
-						},
+						transform: mon => BestiaryPage._tableView_getEntryPropTransform({mon, fnGet: Renderer.monster.getOrderedActions}),
 						flex: 3,
 					},
-					bonus: {name: "Bonus Actions", transform: it => (it || []).map(x => Renderer.get().render(x, 2)).join(""), flex: 3},
-					reaction: {name: "Reactions", transform: it => (it || []).map(x => Renderer.get().render(x, 2)).join(""), flex: 3},
+					_bonus: {
+						name: "Bonus Actions",
+						transform: mon => BestiaryPage._tableView_getEntryPropTransform({mon, fnGet: Renderer.monster.getOrderedBonusActions}),
+						flex: 3,
+					},
+					_reaction: {
+						name: "Reactions",
+						transform: mon => BestiaryPage._tableView_getEntryPropTransform({mon, fnGet: Renderer.monster.getOrderedReactions}),
+						flex: 3,
+					},
 					legendary: {name: "Legendary Actions", transform: it => (it || []).map(x => Renderer.get().render(x, 2)).join(""), flex: 3},
 					mythic: {name: "Mythic Actions", transform: it => (it || []).map(x => Renderer.get().render(x, 2)).join(""), flex: 3},
 					_lairActions: {
@@ -315,60 +394,6 @@ class BestiaryPage extends ListPageMultiSource {
 
 	get list_ () { return this._list; }
 
-	async _bookView_popTblGetNumShown ({$wrpContent, $dispName, $wrpControls}) {
-		this._bookViewToShow = await this._sublistManager.getPinnedEntities();
-
-		this._bookViewToShow.sort((a, b) => SortUtil.ascSort(a._displayName || a.name, b._displayName || b.name));
-
-		let numShown = 0;
-
-		const stack = [];
-
-		const renderCreature = (mon) => {
-			stack.push(`<div class="bkmv__wrp-item"><table class="w-100 stats stats--book stats--bkmv"><tbody>`);
-			stack.push(Renderer.monster.getCompactRenderedString(mon));
-			stack.push(`</tbody></table></div>`);
-		};
-
-		stack.push(`<div class="w-100 h-100">`);
-		this._bookViewToShow.forEach(mon => renderCreature(mon));
-		if (!this._bookViewToShow.length && Hist.lastLoadedId != null) {
-			renderCreature(this._dataList[Hist.lastLoadedId]);
-		}
-		stack.push(`</div>`);
-
-		numShown += this._bookViewToShow.length;
-		$wrpContent.append(stack.join(""));
-
-		// region Markdown
-		// TODO refactor this and spell markdown section
-		const pGetAsMarkdown = async () => {
-			const toRender = this._bookViewToShow.length ? this._bookViewToShow : [this._dataList[Hist.lastLoadedId]];
-			return RendererMarkdown.monster.pGetMarkdownDoc(toRender);
-		};
-
-		const $btnDownloadMarkdown = $(`<button class="btn btn-default btn-sm">Download as Markdown</button>`)
-			.click(async () => DataUtil.userDownloadText("bestiary.md", await pGetAsMarkdown()));
-
-		const $btnCopyMarkdown = $(`<button class="btn btn-default btn-sm px-2" title="Copy Markdown to Clipboard"><span class="glyphicon glyphicon-copy"/></button>`)
-			.click(async () => {
-				await MiscUtil.pCopyTextToClipboard(await pGetAsMarkdown());
-				JqueryUtil.showCopiedEffect($btnCopyMarkdown);
-			});
-
-		const $btnDownloadMarkdownSettings = $(`<button class="btn btn-default btn-sm px-2" title="Markdown Settings"><span class="glyphicon glyphicon-cog"/></button>`)
-			.click(async () => RendererMarkdown.pShowSettingsModal());
-
-		$$`<div class="ve-flex-v-center btn-group ml-2">
-			${$btnDownloadMarkdown}
-			${$btnCopyMarkdown}
-			${$btnDownloadMarkdownSettings}
-		</div>`.appendTo($wrpControls);
-		// endregion
-
-		return numShown;
-	}
-
 	getListItem (mon, mI) {
 		const hash = UrlUtil.autoEncodeHash(mon);
 		if (this._seenHashes.has(hash)) return null;
@@ -398,10 +423,10 @@ class BestiaryPage extends ListPageMultiSource {
 						this._encounterBuilder.getButtons(mI),
 						e_({tag: "span", clazz: `ecgen__name bold col-4-2 pl-0`, text: mon.name}),
 						e_({tag: "span", clazz: `col-4-1`, text: type}),
-						e_({tag: "span", clazz: `col-1-7 text-center`, text: cr}),
+						e_({tag: "span", clazz: `col-1-7 ve-text-center`, text: cr}),
 						e_({
 							tag: "span",
-							clazz: `col-2 text-center ${Parser.sourceJsonToColor(mon.source)} pr-0`,
+							clazz: `col-2 ve-text-center ${Parser.sourceJsonToColor(mon.source)} pr-0`,
 							style: Parser.sourceJsonToStylePart(mon.source),
 							title: `${Parser.sourceJsonToFull(mon.source)}${Renderer.utils.getSourceSubText(mon)}`,
 							text: source,
